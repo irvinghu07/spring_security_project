@@ -2,6 +2,7 @@ package com.irving.security.springbootsecurity.config;
 
 import com.irving.security.springbootsecurity.authentication.LoginAuthenticationFailureHandler;
 import com.irving.security.springbootsecurity.authentication.LoginAuthenticationSuccessHandler;
+import com.irving.security.springbootsecurity.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +14,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
+    @Autowired
+    private SecurityProperties securityProperties;
 
     @Autowired
     private LoginAuthenticationSuccessHandler loginAuthenticationSuccessHandler;
@@ -44,14 +47,13 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 //        弹出框显示
 //        http.httpBasic()
         http.formLogin()
-                .loginPage("/security_login.html")
+                .loginPage("/authentication/require")// /security-login.html
                 .loginProcessingUrl("/authentication/form")
-//                .failureUrl("/error/404.html")
 //                .successHandler(loginAuthenticationSuccessHandler)
 //                .failureHandler(loginAuthenticationFailureHandler)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/security_login.html")
+                .antMatchers("/authentication/require", securityProperties.getBrowserProperties().getLoginPage())
                 .permitAll()
                 .anyRequest()
                 .authenticated()

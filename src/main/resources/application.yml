@@ -12,3 +12,9 @@ spring:
 #    mode: HTML
 #    suffix: .html
 #    prefix: classpath:/templates/
+#com:
+#  irving:
+#    security:
+#      browser:
+#        loginPage: /demo-login.html
+#loginPage: /demo-login.html
