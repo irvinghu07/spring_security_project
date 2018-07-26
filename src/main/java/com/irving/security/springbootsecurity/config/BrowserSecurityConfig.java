@@ -36,11 +36,17 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 //        弹出框显示
 //        http.httpBasic()
         http.formLogin()
-                .loginPage("/static/security_login.html")
+                .loginPage("/security_login.html")
+                .loginProcessingUrl("/authentication/form")
+//                .failureUrl("/error/404.html")
                 .and()
                 .authorizeRequests()
-                .antMatchers("/static/security_login.html").permitAll()
+                .antMatchers("/security_login.html")
+                .permitAll()
                 .anyRequest()
-                .authenticated();
+                .authenticated()
+                .and()
+                .csrf().disable()
+        ;
     }
 }
