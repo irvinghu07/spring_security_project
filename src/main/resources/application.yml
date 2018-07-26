@@ -6,9 +6,9 @@ spring:
       password:
   session:
     store-type: none
-  thymeleaf:
-    cache: false
-    encoding: UTF-8
-    mode: HTML
-    suffix: .html
-    prefix: classpath:/templates/
+#  thymeleaf:
+#    cache: false
+#    encoding: UTF-8
+#    mode: HTML
+#    suffix: .html
+#    prefix: classpath:/templates/

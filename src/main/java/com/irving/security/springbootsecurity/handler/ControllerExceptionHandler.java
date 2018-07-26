@@ -1,6 +1,8 @@
 package com.irving.security.springbootsecurity.handler;
 
 import com.irving.security.springbootsecurity.excepation.UserNotExistException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -12,6 +14,7 @@ import java.util.Map;
 
 @ControllerAdvice
 public class ControllerExceptionHandler {
+    private static final Logger logger = LoggerFactory.getLogger(ControllerExceptionHandler.class);
 
     @ExceptionHandler({UserNotExistException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -22,4 +25,12 @@ public class ControllerExceptionHandler {
             put("message", ex.getMessage());
         }};
     }
+
+    @ExceptionHandler(RuntimeException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    public void handleAllRuntimeException(RuntimeException e) {
+        logger.error("error: {} trace: {}", e.getMessage(), e.getStackTrace());
+    }
+
 }

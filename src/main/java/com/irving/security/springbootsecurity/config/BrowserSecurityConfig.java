@@ -1,5 +1,8 @@
 package com.irving.security.springbootsecurity.config;
 
+import com.irving.security.springbootsecurity.authentication.LoginAuthenticationFailureHandler;
+import com.irving.security.springbootsecurity.authentication.LoginAuthenticationSuccessHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +14,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private LoginAuthenticationSuccessHandler loginAuthenticationSuccessHandler;
+
+    @Autowired
+    private LoginAuthenticationFailureHandler loginAuthenticationFailureHandler;
 
     @Bean
     @ConditionalOnMissingBean(PasswordEncoder.class)
@@ -39,6 +47,8 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/security_login.html")
                 .loginProcessingUrl("/authentication/form")
 //                .failureUrl("/error/404.html")
+//                .successHandler(loginAuthenticationSuccessHandler)
+//                .failureHandler(loginAuthenticationFailureHandler)
                 .and()
                 .authorizeRequests()
                 .antMatchers("/security_login.html")

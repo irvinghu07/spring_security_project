@@ -49,8 +49,8 @@ public class MyUserDetailsService implements UserDetailsService {
         String rowPass = "123456";
         String processedPass = getSHA256Str(rowPass);
 //        logger.info("password from md5: {}", processedPass);
-        String finalPwd = passwordEncoder.encode(rowPass);
-        finalPwd = "{" + encoding + "}" + processedPass;
+//        String finalPwd = passwordEncoder.encode(rowPass);
+        String finalPwd = "{" + encoding + "}" + processedPass;
         logger.info("encoding{} password:{}", encoding, finalPwd);
         logger.info("match: {}", passwordEncoder.matches("123456", finalPwd));
         return new User(username, finalPwd, true, true, true, true, AuthorityUtils
