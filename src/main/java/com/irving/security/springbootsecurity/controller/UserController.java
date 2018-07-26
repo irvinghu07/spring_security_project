@@ -27,11 +27,11 @@ public class UserController {
     @GetMapping
     @JsonView(User.UserSimpleView.class)
     @ApiOperation(value = "用户查询服务")
-    public List<User> query(QueryCondition condition, @PageableDefault(page = 2, size = 17, sort = "username,asc") Pageable pageable){
+    public List<User> query(QueryCondition condition, @PageableDefault(page = 2, size = 17, sort = "username,asc") Pageable pageable) {
         logger.info("query condition:{}", ReflectionToStringBuilder.toString(condition, ToStringStyle.MULTI_LINE_STYLE));
         logger.info("pageable information:{}", ReflectionToStringBuilder.toString(pageable, ToStringStyle.MULTI_LINE_STYLE));
-        return new ArrayList<User>(){{
-            add(new User("irving","0707"));
+        return new ArrayList<User>() {{
+            add(new User("irving", "0707"));
             add(new User("sarah", "520"));
             add(new User("pipi", "0610"));
         }};
@@ -39,7 +39,7 @@ public class UserController {
 
     @GetMapping("/{id:\\d+}")
     @JsonView(User.UserDetailView.class)
-    public User getInfo(@ApiParam(value = "用户id") @PathVariable("id") String id){
+    public User getInfo(@ApiParam(value = "用户id") @PathVariable("id") String id) {
 //        throw new UserNotExistException("user does not exist",id);
 //        throw new RuntimeException("测试拦截器捕获运行时异常");
         logger.info("进入getinfo服务");
@@ -48,8 +48,8 @@ public class UserController {
     }
 
     @PostMapping
-    public User createUser(@Valid @RequestBody User user, BindingResult bindingResult){
-        if (bindingResult.hasErrors()){
+    public User createUser(@Valid @RequestBody User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().stream().forEach(objectError -> logger.error(objectError.getDefaultMessage()));
         }
         user.setId(1);
@@ -60,9 +60,9 @@ public class UserController {
     @PutMapping("/{uid:\\d+}")
     @JsonView(User.UserSimpleView.class)
 //    @PathVariable(name = "uid") Integer id,
-    public User updateUser(@Valid @RequestBody User user, BindingResult result){
+    public User updateUser(@Valid @RequestBody User user, BindingResult result) {
 //        logger.info("user in updateUser():{}", user);
-        if (result.hasErrors()){
+        if (result.hasErrors()) {
             result.getAllErrors().stream().forEach(objectError -> logger.error(objectError.getDefaultMessage()));
         }
         user.setId(1);
@@ -70,7 +70,7 @@ public class UserController {
     }
 
     @DeleteMapping("{uid:\\d+}")
-    public void delete(@PathVariable(value = "uid") Integer id){
+    public void delete(@PathVariable(value = "uid") Integer id) {
         logger.info("id:{}", id);
     }
 }
