@@ -51,6 +51,8 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 //        弹出框显示
 //        http.authorizeRequests().anyRequest().authenticated().and().httpBasic();
+
+
         http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin()
                 .loginPage("/authentication/require")// /security-login.html
@@ -66,7 +68,6 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated()
                 .and()
-                .csrf().disable()
-        ;
+                .csrf().disable();
     }
 }
