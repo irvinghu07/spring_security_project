@@ -1,6 +1,6 @@
 package com.irving.security.springbootsecurity.handler;
 
-import com.irving.security.springbootsecurity.excepation.UserNotExistException;
+import com.irving.security.springbootsecurity.exception.UserNotExistException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

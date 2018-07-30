@@ -1,4 +1,4 @@
-package com.irving.security.springbootsecurity.excepation;
+package com.irving.security.springbootsecurity.exception;
 
 public class UserNotExistException extends RuntimeException{
     private String id;

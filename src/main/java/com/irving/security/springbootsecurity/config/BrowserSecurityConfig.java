@@ -2,6 +2,7 @@ package com.irving.security.springbootsecurity.config;
 
 import com.irving.security.springbootsecurity.authentication.LoginAuthenticationFailureHandler;
 import com.irving.security.springbootsecurity.authentication.LoginAuthenticationSuccessHandler;
+import com.irving.security.springbootsecurity.filter.ValidateCodeFilter;
 import com.irving.security.springbootsecurity.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -11,6 +12,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -22,6 +24,9 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private LoginAuthenticationFailureHandler loginAuthenticationFailureHandler;
+
+    @Autowired
+    private ValidateCodeFilter validateCodeFilter;
 
     @Bean
     @ConditionalOnMissingBean(PasswordEncoder.class)
@@ -45,15 +50,18 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 //        弹出框显示
-//        http.httpBasic()
-        http.formLogin()
+//        http.authorizeRequests().anyRequest().authenticated().and().httpBasic();
+        http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
+                .formLogin()
                 .loginPage("/authentication/require")// /security-login.html
                 .loginProcessingUrl("/authentication/form")
-//                .successHandler(loginAuthenticationSuccessHandler)
-//                .failureHandler(loginAuthenticationFailureHandler)
+                .successHandler(loginAuthenticationSuccessHandler)
+                .failureHandler(loginAuthenticationFailureHandler)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/authentication/require", securityProperties.getBrowserProperties().getLoginPage())
+                .antMatchers("/authentication/require",
+                        securityProperties.getBrowserProperties().getLoginPage(),
+                        "/code/image")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

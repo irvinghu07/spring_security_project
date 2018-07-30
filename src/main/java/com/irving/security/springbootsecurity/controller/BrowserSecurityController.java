@@ -28,14 +28,16 @@ public class BrowserSecurityController {
     private static final Logger logger = LoggerFactory.getLogger(BrowserSecurityController.class);
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
-    @RequestMapping("authentication/require")
+    @RequestMapping("/authentication/require")
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public SimpleResponse requireAuthentication(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public SimpleResponse requireAuthentication(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
         SavedRequest savedRequest = requestCache.getRequest(request, response);
         if (savedRequest != null) {
             String target = savedRequest.getRedirectUrl();
             logger.info("引发跳转的请求是：{}", target);
             if (StringUtils.endsWithIgnoreCase(target, ".html")) {
+                logger.info("redirecting to login page:{}", securityProperties.getBrowserProperties().getLoginPage());
                 redirectStrategy.sendRedirect(request, response, securityProperties.getBrowserProperties().getLoginPage());
             }
         }

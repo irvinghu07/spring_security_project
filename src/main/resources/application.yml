@@ -12,9 +12,13 @@ spring:
 #    mode: HTML
 #    suffix: .html
 #    prefix: classpath:/templates/
-#com:
-#  irving:
-#    security:
-#      browser:
+com:
+  irving:
+    security:
+      CAPTCHA:
+        length: 6
+        width: 100
+        urls: /hello, /user/*, /user
+      browser:
 #        loginPage: /demo-login.html
-#loginPage: /demo-login.html
+#        loginType: REDIRECT

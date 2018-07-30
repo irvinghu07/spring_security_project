@@ -3,12 +3,21 @@ package com.irving.security.springbootsecurity.properties;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-//@Configuration
 @Component
 public class BrowserProperties {
-//    com.irving.security.browser.
-    @Value("${loginPage:/security-login.html}")
+    @Value("${com.irving.security.browser.loginPage:/security-login.html}")
     private String loginPage;
+
+    @Value("${com.irving.security.browser.loginType:JSON}")
+    private LoginType loginType;
+
+    public LoginType getLoginType() {
+        return loginType;
+    }
+
+    public void setLoginType(LoginType loginType) {
+        this.loginType = loginType;
+    }
 
     public String getLoginPage() {
         return loginPage;
