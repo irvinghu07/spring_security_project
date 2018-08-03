@@ -16,8 +16,8 @@ com:
   irving:
     security:
       CAPTCHA:
-        length: 6
-        width: 100
+#        length: 6
+#        width: 100
         urls: /hello, /user/*, /user
       browser:
 #        loginPage: /demo-login.html

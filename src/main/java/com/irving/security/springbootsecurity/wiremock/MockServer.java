@@ -8,6 +8,7 @@ import java.io.IOException;
 
 
 public class MockServer {
+
     public static void main(String[] args) {
         WireMock.configureFor(8062);
         WireMock.removeAllMappings();

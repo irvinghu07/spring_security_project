@@ -25,8 +25,8 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private LoginAuthenticationFailureHandler loginAuthenticationFailureHandler;
 
-    @Autowired
-    private ValidateCodeFilter validateCodeFilter;
+//    @Autowired
+//    private ValidateCodeFilter validateCodeFilter;
 
     @Bean
     @ConditionalOnMissingBean(PasswordEncoder.class)
@@ -51,9 +51,13 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 //        弹出框显示
 //        http.authorizeRequests().anyRequest().authenticated().and().httpBasic();
+        ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter();
+        validateCodeFilter.setAuthenticationFailureHandler(loginAuthenticationFailureHandler);
+        validateCodeFilter.setSecurityProperties(securityProperties);
+        validateCodeFilter.afterPropertiesSet();
 
-
-        http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
+        http
+                .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin()
                 .loginPage("/authentication/require")// /security-login.html
                 .loginProcessingUrl("/authentication/form")

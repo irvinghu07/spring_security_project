@@ -1,16 +1,14 @@
 package com.irving.security.springbootsecurity.filter;
 
 import com.irving.security.springbootsecurity.CAPTCHA.ImageCode;
-import com.irving.security.springbootsecurity.authentication.LoginAuthenticationFailureHandler;
 import com.irving.security.springbootsecurity.controller.ValidateCodeController;
 import com.irving.security.springbootsecurity.exception.ValidateCodeException;
 import com.irving.security.springbootsecurity.properties.SecurityProperties;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.social.connect.web.HttpSessionSessionStrategy;
 import org.springframework.social.connect.web.SessionStrategy;
-import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
@@ -26,14 +24,14 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-@Component("validateCodeFilter")
+//@Component("validateCodeFilter")
 public class ValidateCodeFilter extends OncePerRequestFilter implements InitializingBean {
 
-    @Autowired
+    //    @Autowired
     private SecurityProperties securityProperties;
 
-    @Autowired
-    private LoginAuthenticationFailureHandler loginAuthenticationFailureHandler;
+    //    @Autowired
+    private AuthenticationFailureHandler authenticationFailureHandler;
 
     private SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
 
@@ -55,12 +53,16 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
     @Override
     public void afterPropertiesSet() throws ServletException {
         super.afterPropertiesSet();
-        String[] urlSet = StringUtils.splitByWholeSeparatorPreserveAllTokens(
-                securityProperties.getValidateCodeProperties().getImageCodeProperties().getUrls(), ",");
+        String[] urlSet = StringUtils
+                .splitByWholeSeparatorPreserveAllTokens(StringUtils
+                        .replace(securityProperties.getValidateCodeProperties()
+                                .getImageCodeProperties()
+                                .getUrls(), " ", ""), ",");
 //        allUrls.add();
         for (String url : urlSet) {
             allUrls.add(url);
         }
+
     }
 
     /**
@@ -86,12 +88,11 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
             try {
                 validate(new ServletWebRequest(request));
             } catch (ValidateCodeException e) {
-                loginAuthenticationFailureHandler.onAuthenticationFailure(request, response, e);
+                authenticationFailureHandler.onAuthenticationFailure(request, response, e);
                 return;
             }
-        } else {
-            filterChain.doFilter(request, response);
         }
+        filterChain.doFilter(request, response);
     }
 
     private void validate(ServletWebRequest request) throws ServletRequestBindingException {
@@ -118,4 +119,11 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
         sessionStrategy.removeAttribute(request, ValidateCodeController.SESSION_KEY);
     }
 
+    public void setAuthenticationFailureHandler(AuthenticationFailureHandler authenticationFailureHandler) {
+        this.authenticationFailureHandler = authenticationFailureHandler;
+    }
+
+    public void setSecurityProperties(SecurityProperties securityProperties) {
+        this.securityProperties = securityProperties;
+    }
 }

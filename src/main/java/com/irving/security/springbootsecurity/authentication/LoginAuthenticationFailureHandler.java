@@ -40,6 +40,7 @@ public class LoginAuthenticationFailureHandler extends SimpleUrlAuthenticationFa
             response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write(objectMapper.writeValueAsString(exception.getMessage()));
+            System.out.println("reason: " + exception.getMessage());
         } else {
             super.onAuthenticationFailure(request, response, exception);
         }

@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-//@Configuration
-//@EnableConfigurationProperties(BrowserProperties.class)
 public class SecurityProperties {
     @Autowired
     private BrowserProperties browserProperties;
