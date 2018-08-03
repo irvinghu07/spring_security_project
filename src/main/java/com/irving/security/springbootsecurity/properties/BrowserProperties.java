@@ -11,6 +11,10 @@ public class BrowserProperties {
     @Value("${com.irving.security.browser.loginType:JSON}")
     private LoginType loginType;
 
+    // default 24 hours
+    @Value("${com.irving.security.browser.rememberMeDuration:86400}")
+    private int rememberMeDuration;
+
     public LoginType getLoginType() {
         return loginType;
     }
@@ -25,5 +29,13 @@ public class BrowserProperties {
 
     public void setLoginPage(String loginPage) {
         this.loginPage = loginPage;
+    }
+
+    public int getRememberMeDuration() {
+        return rememberMeDuration;
+    }
+
+    public void setRememberMeDuration(int rememberMeDuration) {
+        this.rememberMeDuration = rememberMeDuration;
     }
 }

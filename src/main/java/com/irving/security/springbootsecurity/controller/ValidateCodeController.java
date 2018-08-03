@@ -20,15 +20,23 @@ public class ValidateCodeController {
     @Autowired
     private ValidateCodeGenerator imageCodeGenerator;
 
+    @Autowired
+    private ValidateCodeGenerator messageCodeGenerator;
+
     public static final String SESSION_KEY = "SESSION_KEY_IMAGE_CODE";
     private SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
 
     @GetMapping("/code/image")
-    public void createCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void createImageCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
         ImageCode imageCode = imageCodeGenerator.createImageCode(new ServletWebRequest(request));
         sessionStrategy.setAttribute(new ServletWebRequest(request), SESSION_KEY, imageCode);
         ImageIO.write(imageCode.getImage(), "JPEG", response.getOutputStream());
     }
 
-
+    @GetMapping("/code/message")
+    public void createMessageCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        ImageCode imageCode = imageCodeGenerator.createImageCode(new ServletWebRequest(request));
+        sessionStrategy.setAttribute(new ServletWebRequest(request), SESSION_KEY, imageCode);
+        ImageIO.write(imageCode.getImage(), "JPEG", response.getOutputStream());
+    }
 }

@@ -18,7 +18,8 @@ com:
       CAPTCHA:
 #        length: 6
 #        width: 100
-        urls: /hello, /user/*, /user
+#        urls: /hello, /user/*, /user
       browser:
 #        loginPage: /demo-login.html
 #        loginType: REDIRECT
+        rememberMeDuration: 1800

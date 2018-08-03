@@ -16,7 +16,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-@Service
+@Service("userDetailsService")
 public class MyUserDetailsService implements UserDetailsService {
     private static final Logger logger = LoggerFactory.getLogger(MyUserDetailsService.class);
 
