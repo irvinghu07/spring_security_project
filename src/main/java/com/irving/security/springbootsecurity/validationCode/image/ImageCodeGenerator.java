@@ -1,6 +1,6 @@
-package com.irving.security.springbootsecurity.generator;
+package com.irving.security.springbootsecurity.validationCode.image;
 
-import com.irving.security.springbootsecurity.CAPTCHA.ImageCode;
+import com.irving.security.springbootsecurity.validationCode.ValidateCodeGenerator;
 import com.irving.security.springbootsecurity.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.ServletRequestUtils;
@@ -16,7 +16,7 @@ public class ImageCodeGenerator implements ValidateCodeGenerator {
     private SecurityProperties securityProperties;
 
     @Override
-    public ImageCode createImageCode(ServletWebRequest request) {
+    public ImageCode generateCode(ServletWebRequest request) {
         int width = ServletRequestUtils.getIntParameter(request.getRequest(), "width",
                 securityProperties.getValidateCodeProperties().getImageCodeProperties().getWidth());
         int height = ServletRequestUtils.getIntParameter(request.getRequest(), "height",

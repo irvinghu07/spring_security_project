@@ -6,11 +6,11 @@ public class UserNotExistException extends RuntimeException{
 
 
     /**
-     * Constructs a new runtime exception with the specified detail message.
+     * Constructs a new runtime exception with the specified detail validationCode.
      * The cause is not initialized, and may subsequently be initialized by a
      * call to {@link #initCause}.
      *
-     * @param message the detail message. The detail message is saved for
+     * @param message the detail validationCode. The detail validationCode is saved for
      *                later retrieval by the {@link #getMessage()} method.
      */
     public UserNotExistException(String message, String id) {

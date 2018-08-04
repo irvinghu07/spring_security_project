@@ -1,6 +1,6 @@
 package com.irving.security.springbootsecurity.filter;
 
-import com.irving.security.springbootsecurity.CAPTCHA.ImageCode;
+import com.irving.security.springbootsecurity.validationCode.image.ImageCode;
 import com.irving.security.springbootsecurity.controller.ValidateCodeController;
 import com.irving.security.springbootsecurity.exception.ValidateCodeException;
 import com.irving.security.springbootsecurity.properties.SecurityProperties;
@@ -97,7 +97,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
 
     private void validate(ServletWebRequest request) throws ServletRequestBindingException {
         ImageCode codeInSession = (ImageCode) sessionStrategy.getAttribute(request,
-                ValidateCodeController.SESSION_KEY);
+                ValidateCodeController.SESSION_KEY_CAPTCHA);
         String codeInRequest = ServletRequestUtils.getStringParameter(request.getRequest(), "imageCode");
         if (StringUtils.isBlank(codeInRequest)) {
             throw new ValidateCodeException("验证码的值不能为空");
@@ -107,8 +107,8 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
             throw new ValidateCodeException("验证码不存在");
         }
 
-        if (codeInSession.isExpried()) {
-            sessionStrategy.removeAttribute(request, ValidateCodeController.SESSION_KEY);
+        if (codeInSession.isExpired()) {
+            sessionStrategy.removeAttribute(request, ValidateCodeController.SESSION_KEY_CAPTCHA);
             throw new ValidateCodeException("验证码已过期");
         }
 
@@ -116,7 +116,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
             throw new ValidateCodeException("验证码不匹配");
         }
 
-        sessionStrategy.removeAttribute(request, ValidateCodeController.SESSION_KEY);
+        sessionStrategy.removeAttribute(request, ValidateCodeController.SESSION_KEY_CAPTCHA);
     }
 
     public void setAuthenticationFailureHandler(AuthenticationFailureHandler authenticationFailureHandler) {

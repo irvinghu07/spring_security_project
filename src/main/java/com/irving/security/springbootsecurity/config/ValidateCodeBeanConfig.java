@@ -1,7 +1,9 @@
 package com.irving.security.springbootsecurity.config;
 
-import com.irving.security.springbootsecurity.generator.ImageCodeGenerator;
-import com.irving.security.springbootsecurity.generator.ValidateCodeGenerator;
+import com.irving.security.springbootsecurity.validationCode.image.ImageCodeGenerator;
+import com.irving.security.springbootsecurity.validationCode.ValidateCodeGenerator;
+import com.irving.security.springbootsecurity.messaging.DefaultMessageCodeSender;
+import com.irving.security.springbootsecurity.messaging.MessageCodeSender;
 import com.irving.security.springbootsecurity.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -19,5 +21,11 @@ public class ValidateCodeBeanConfig {
         ImageCodeGenerator codeGenerator = new ImageCodeGenerator();
         codeGenerator.setSecurityProperties(securityProperties);
         return codeGenerator;
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(MessageCodeSender.class)
+    public MessageCodeSender messageCodeSender() {
+        return new DefaultMessageCodeSender();
     }
 }

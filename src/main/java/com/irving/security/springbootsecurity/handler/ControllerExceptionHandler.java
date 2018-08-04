@@ -22,7 +22,7 @@ public class ControllerExceptionHandler {
     public Map<String, Object> handleUserNotExistException(UserNotExistException ex) {
         return new HashMap<String, Object>() {{
             put("id", ex.getId());
-            put("message", ex.getMessage());
+            put("validationCode", ex.getMessage());
         }};
     }
 

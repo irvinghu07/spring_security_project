@@ -1,18 +1,18 @@
-package com.irving.security.springbootsecurity.message;
+package com.irving.security.springbootsecurity.validationCode;
 
 import java.time.LocalDateTime;
 
-public class MessageCode {
+public class ValidateCode {
     private String code;
 
     private LocalDateTime expireTime;
 
-    public MessageCode(String code, int expireIn) {
+    public ValidateCode(String code, int expireIn) {
         this.code = code;
         this.expireTime = LocalDateTime.now().plusSeconds(expireIn);
     }
 
-    public MessageCode(String code, LocalDateTime expireTime) {
+    public ValidateCode(String code, LocalDateTime expireTime) {
         this.code = code;
         this.expireTime = expireTime;
     }
