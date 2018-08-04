@@ -1,10 +1,9 @@
-package com.irving.security.springbootsecurity.config;
+package com.irving.security.springbootsecurity.validationCode;
 
-import com.irving.security.springbootsecurity.validationCode.image.ImageCodeGenerator;
-import com.irving.security.springbootsecurity.validationCode.ValidateCodeGenerator;
-import com.irving.security.springbootsecurity.messaging.DefaultMessageCodeSender;
-import com.irving.security.springbootsecurity.messaging.MessageCodeSender;
 import com.irving.security.springbootsecurity.properties.SecurityProperties;
+import com.irving.security.springbootsecurity.validationCode.image.ImageCodeGenerator;
+import com.irving.security.springbootsecurity.validationCode.message.DefaultMessageCodeSender;
+import com.irving.security.springbootsecurity.validationCode.message.MessageCodeSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;

@@ -1,9 +1,7 @@
-package com.irving.security.springbootsecurity.filter;
+package com.irving.security.springbootsecurity.validationCode;
 
-import com.irving.security.springbootsecurity.validationCode.image.ImageCode;
-import com.irving.security.springbootsecurity.controller.ValidateCodeController;
-import com.irving.security.springbootsecurity.exception.ValidateCodeException;
 import com.irving.security.springbootsecurity.properties.SecurityProperties;
+import com.irving.security.springbootsecurity.validationCode.image.ImageCode;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;

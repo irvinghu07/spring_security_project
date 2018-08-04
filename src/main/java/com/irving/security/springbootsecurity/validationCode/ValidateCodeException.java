@@ -1,4 +1,4 @@
-package com.irving.security.springbootsecurity.exception;
+package com.irving.security.springbootsecurity.validationCode;
 
 import org.springframework.security.core.AuthenticationException;
 

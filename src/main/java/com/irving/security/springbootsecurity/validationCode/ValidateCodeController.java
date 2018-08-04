@@ -1,9 +1,7 @@
-package com.irving.security.springbootsecurity.controller;
+package com.irving.security.springbootsecurity.validationCode;
 
 import com.irving.security.springbootsecurity.validationCode.image.ImageCode;
-import com.irving.security.springbootsecurity.validationCode.ValidateCodeGenerator;
-import com.irving.security.springbootsecurity.messaging.MessageCodeSender;
-import com.irving.security.springbootsecurity.validationCode.ValidateCode;
+import com.irving.security.springbootsecurity.validationCode.message.MessageCodeSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.web.HttpSessionSessionStrategy;
 import org.springframework.social.connect.web.SessionStrategy;

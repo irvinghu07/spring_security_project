@@ -2,7 +2,7 @@ package com.irving.security.springbootsecurity.config;
 
 import com.irving.security.springbootsecurity.authentication.LoginAuthenticationFailureHandler;
 import com.irving.security.springbootsecurity.authentication.LoginAuthenticationSuccessHandler;
-import com.irving.security.springbootsecurity.filter.ValidateCodeFilter;
+import com.irving.security.springbootsecurity.validationCode.ValidateCodeFilter;
 import com.irving.security.springbootsecurity.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

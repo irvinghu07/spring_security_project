@@ -1,4 +1,4 @@
-package com.irving.security.springbootsecurity.messaging;
+package com.irving.security.springbootsecurity.validationCode.message;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
