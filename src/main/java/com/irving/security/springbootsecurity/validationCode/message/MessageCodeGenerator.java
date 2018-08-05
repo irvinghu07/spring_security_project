@@ -16,12 +16,11 @@ public class MessageCodeGenerator implements ValidateCodeGenerator {
 
     @Override
     public ValidateCode generateCode(ServletWebRequest request) {
-        ValidateCode validateCode = new ValidateCode(RandomStringUtils.randomNumeric(securityProperties
-                .getValidateCodeProperties().getMessageCodeProperties().getLength()), securityProperties
+        String code = RandomStringUtils.randomNumeric(securityProperties
+                .getValidateCodeProperties().getMessageCodeProperties().getLength());
+        return new ValidateCode(code, securityProperties
                 .getValidateCodeProperties().getMessageCodeProperties().getExpireIn());
-        return validateCode;
     }
-
 
     public SecurityProperties getSecurityProperties() {
         return securityProperties;

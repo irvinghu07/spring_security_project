@@ -1,28 +1,27 @@
 package com.irving.security.springbootsecurity.config;
 
+import com.irving.security.springbootsecurity.authentication.AbstractChannelSecurityConfig;
 import com.irving.security.springbootsecurity.authentication.LoginAuthenticationFailureHandler;
 import com.irving.security.springbootsecurity.authentication.LoginAuthenticationSuccessHandler;
 import com.irving.security.springbootsecurity.authentication.mobile.MessageCodeAuthenticationSecurityConfig;
-import com.irving.security.springbootsecurity.validationCode.MessageCodeFilter;
-import com.irving.security.springbootsecurity.validationCode.ValidateCodeFilter;
+import com.irving.security.springbootsecurity.properties.SecurityConstants;
 import com.irving.security.springbootsecurity.properties.SecurityProperties;
+import com.irving.security.springbootsecurity.validationCode.ValidateCodeSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import javax.sql.DataSource;
 
 @Configuration
-public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
+public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
     @Autowired
     private SecurityProperties securityProperties;
 
@@ -41,20 +40,10 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private MessageCodeAuthenticationSecurityConfig messageCodeAuthenticationSecurityConfig;
 
-    @Bean
-    @ConditionalOnMissingBean(PasswordEncoder.class)
-    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
 
-    @Bean
-    public PersistentTokenRepository persistentTokenRepository() {
-        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
-        tokenRepository.setDataSource(dataSource);
-//        tokenRepository.setCreateTableOnStartup(true);
-        return tokenRepository;
-    }
+    @Autowired
+    private ValidateCodeSecurityConfig validateCodeSecurityConfig;
+
 
     /**
      * Override this method to configure the {@link HttpSecurity}. Typically subclasses
@@ -70,26 +59,11 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        弹出框显示
-//        http.authorizeRequests().anyRequest().authenticated().and().httpBasic();
-        ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter();
-        validateCodeFilter.setAuthenticationFailureHandler(loginAuthenticationFailureHandler);
-        validateCodeFilter.setSecurityProperties(securityProperties);
-        validateCodeFilter.afterPropertiesSet();
+        applyPasswordAuthenticationConfig(http);
 
-        MessageCodeFilter messageCodeFilter = new MessageCodeFilter();
-        messageCodeFilter.setAuthenticationFailureHandler(loginAuthenticationFailureHandler);
-        messageCodeFilter.setSecurityProperties(securityProperties);
-        messageCodeFilter.afterPropertiesSet();
-
-        http
-                .addFilterBefore(messageCodeFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
-                .formLogin()
-                .loginPage("/authentication/require")// /security-login.html
-                .loginProcessingUrl("/authentication/form")
-                .successHandler(loginAuthenticationSuccessHandler)
-                .failureHandler(loginAuthenticationFailureHandler)
+        http.apply(validateCodeSecurityConfig)
+                .and()
+                .apply(messageCodeAuthenticationSecurityConfig)
                 .and()
                 .rememberMe()
                 .tokenRepository(persistentTokenRepository())
@@ -97,15 +71,31 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .userDetailsService(userDetailsService)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/authentication/require",
+                .antMatchers(
+                        SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
+                        SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE,
                         securityProperties.getBrowserProperties().getLoginPage(),
-                        "/code/*")
+                        SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/*")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
-                .csrf()
-                .disable()
-                .apply(messageCodeAuthenticationSecurityConfig);
+                .csrf().disable();
+    }
+
+
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+        tokenRepository.setDataSource(dataSource);
+//		tokenRepository.setCreateTableOnStartup(true);
+        return tokenRepository;
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(PasswordEncoder.class)
+    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 }
