@@ -29,4 +29,7 @@ public class ImageCode extends ValidateCode {
     public boolean isExpired() {
         return LocalDateTime.now().isAfter(this.getExpireTime());
     }
+
+
+
 }

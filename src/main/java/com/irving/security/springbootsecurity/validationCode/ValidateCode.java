@@ -32,4 +32,17 @@ public class ValidateCode {
     public void setExpireTime(LocalDateTime expireTime) {
         this.expireTime = expireTime;
     }
+    
+    public boolean isExpired() {
+        return LocalDateTime.now().isAfter(this.getExpireTime());
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("ValidateCode{");
+        sb.append("code='").append(code).append('\'');
+        sb.append(", expireTime=").append(expireTime);
+        sb.append('}');
+        return sb.toString();
+    }
 }

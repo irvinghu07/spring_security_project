@@ -1,7 +1,6 @@
 package com.irving.security.springbootsecurity.validationCode;
 
 import com.irving.security.springbootsecurity.properties.SecurityProperties;
-import com.irving.security.springbootsecurity.validationCode.image.ImageCode;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -22,10 +21,9 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-//@Component("validateCodeFilter")
-public class ValidateCodeFilter extends OncePerRequestFilter implements InitializingBean {
+public class MessageCodeFilter extends OncePerRequestFilter implements InitializingBean {
 
-    private static final String SESSION_KEY = ValidateCodeProcessor.SESSION_KEY_PREFIX + "IMAGE";
+    private static final String SESSION_KEY = ValidateCodeProcessor.SESSION_KEY_PREFIX + "MESSAGE";
 
     private SecurityProperties securityProperties;
 
@@ -34,7 +32,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
     private SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
 
     private Set<String> allUrls = new HashSet<String>() {{
-        add("/authentication/form");
+        add("/authentication/mobile");
     }};
 
     private AntPathMatcher pathMatcher = new AntPathMatcher();
@@ -53,8 +51,9 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
         super.afterPropertiesSet();
         String[] urlSet = StringUtils
                 .splitByWholeSeparatorPreserveAllTokens(StringUtils
-                        .replace(securityProperties.getValidateCodeProperties()
-                                .getImageCodeProperties()
+                        .replace(securityProperties
+                                .getValidateCodeProperties()
+                                .getMessageCodeProperties()
                                 .getUrls(), " ", ""), ",");
 //        allUrls.add();
         for (String url : urlSet) {
@@ -94,9 +93,9 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
     }
 
     private void validate(ServletWebRequest request) throws ServletRequestBindingException {
-        ImageCode codeInSession = (ImageCode) sessionStrategy.getAttribute(request,
+        ValidateCode codeInSession = (ValidateCode) sessionStrategy.getAttribute(request,
                 SESSION_KEY);
-        String codeInRequest = ServletRequestUtils.getStringParameter(request.getRequest(), "imageCode");
+        String codeInRequest = ServletRequestUtils.getStringParameter(request.getRequest(), "messageCode");
         if (StringUtils.isBlank(codeInRequest)) {
             throw new ValidateCodeException("验证码的值不能为空");
         }

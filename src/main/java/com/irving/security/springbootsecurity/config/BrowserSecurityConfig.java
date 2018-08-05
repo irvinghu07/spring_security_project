@@ -2,6 +2,8 @@ package com.irving.security.springbootsecurity.config;
 
 import com.irving.security.springbootsecurity.authentication.LoginAuthenticationFailureHandler;
 import com.irving.security.springbootsecurity.authentication.LoginAuthenticationSuccessHandler;
+import com.irving.security.springbootsecurity.authentication.mobile.MessageCodeAuthenticationSecurityConfig;
+import com.irving.security.springbootsecurity.validationCode.MessageCodeFilter;
 import com.irving.security.springbootsecurity.validationCode.ValidateCodeFilter;
 import com.irving.security.springbootsecurity.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,9 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
+
+    @Autowired
+    private MessageCodeAuthenticationSecurityConfig messageCodeAuthenticationSecurityConfig;
 
     @Bean
     @ConditionalOnMissingBean(PasswordEncoder.class)
@@ -72,7 +77,13 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
         validateCodeFilter.setSecurityProperties(securityProperties);
         validateCodeFilter.afterPropertiesSet();
 
+        MessageCodeFilter messageCodeFilter = new MessageCodeFilter();
+        messageCodeFilter.setAuthenticationFailureHandler(loginAuthenticationFailureHandler);
+        messageCodeFilter.setSecurityProperties(securityProperties);
+        messageCodeFilter.afterPropertiesSet();
+
         http
+                .addFilterBefore(messageCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin()
                 .loginPage("/authentication/require")// /security-login.html
@@ -88,12 +99,13 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/authentication/require",
                         securityProperties.getBrowserProperties().getLoginPage(),
-                        "/code/image")
+                        "/code/*")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
                 .csrf()
-                .disable();
+                .disable()
+                .apply(messageCodeAuthenticationSecurityConfig);
     }
 }

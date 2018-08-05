@@ -12,7 +12,7 @@ public class MessageCodeProperties {
     @Value("${com.irving.security.message.expireIn:60}")
     private int expireIn;
 
-    @Value("${com.irving.security.message.urls:/authentication/form}")
+    @Value("${com.irving.security.message.urls:/authentication/mobile}")
     private String urls;
 
     public int getLength() {
