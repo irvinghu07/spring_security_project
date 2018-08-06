@@ -1,6 +1,6 @@
 package com.irving.security.springbootsecurity.controller;
 
-import com.irving.security.springbootsecurity.properties.SecurityProperties;
+import com.irving.security.springbootsecurity.security_core.properties.SecurityProperties;
 import com.irving.security.springbootsecurity.support.SimpleResponse;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;

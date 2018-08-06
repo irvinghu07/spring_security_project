@@ -1,12 +1,12 @@
 package com.irving.security.springbootsecurity.config;
 
-import com.irving.security.springbootsecurity.authentication.AbstractChannelSecurityConfig;
-import com.irving.security.springbootsecurity.authentication.LoginAuthenticationFailureHandler;
-import com.irving.security.springbootsecurity.authentication.LoginAuthenticationSuccessHandler;
-import com.irving.security.springbootsecurity.authentication.mobile.MessageCodeAuthenticationSecurityConfig;
-import com.irving.security.springbootsecurity.properties.SecurityConstants;
-import com.irving.security.springbootsecurity.properties.SecurityProperties;
-import com.irving.security.springbootsecurity.validationCode.ValidateCodeSecurityConfig;
+import com.irving.security.springbootsecurity.security_core.authentication.AbstractChannelSecurityConfig;
+import com.irving.security.springbootsecurity.security_core.authentication.LoginAuthenticationFailureHandler;
+import com.irving.security.springbootsecurity.security_core.authentication.LoginAuthenticationSuccessHandler;
+import com.irving.security.springbootsecurity.security_core.authentication.mobile.MessageCodeAuthenticationSecurityConfig;
+import com.irving.security.springbootsecurity.security_core.properties.SecurityConstants;
+import com.irving.security.springbootsecurity.security_core.properties.SecurityProperties;
+import com.irving.security.springbootsecurity.security_core.validationCode.ValidateCodeSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +17,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.social.security.SpringSocialConfigurer;
 
 import javax.sql.DataSource;
 
@@ -44,6 +45,9 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
     @Autowired
     private ValidateCodeSecurityConfig validateCodeSecurityConfig;
 
+    @Autowired
+    private SpringSocialConfigurer imoocSocialSecurityConfig;
+
 
     /**
      * Override this method to configure the {@link HttpSecurity}. Typically subclasses
@@ -64,6 +68,8 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
         http.apply(validateCodeSecurityConfig)
                 .and()
                 .apply(messageCodeAuthenticationSecurityConfig)
+                .and()
+                .apply(imoocSocialSecurityConfig)
                 .and()
                 .rememberMe()
                 .tokenRepository(persistentTokenRepository())

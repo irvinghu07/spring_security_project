@@ -1,7 +1,7 @@
 package com.irving.security.springbootsecurity.CAPTCHA;
 
-import com.irving.security.springbootsecurity.validationCode.ValidateCode;
-import com.irving.security.springbootsecurity.validationCode.ValidateCodeGenerator;
+import com.irving.security.springbootsecurity.security_core.validationCode.ValidateCode;
+import com.irving.security.springbootsecurity.security_core.validationCode.ValidateCodeGenerator;
 import org.springframework.web.context.request.ServletWebRequest;
 
 //@Component("CAPTCHAGenerator")
