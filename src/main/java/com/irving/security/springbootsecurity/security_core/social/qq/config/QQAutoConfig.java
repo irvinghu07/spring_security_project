@@ -14,10 +14,6 @@ import org.springframework.social.config.annotation.SocialConfigurerAdapter;
 @ConditionalOnProperty(prefix = "com.irving.security.social.qq", name = "appId")
 public class QQAutoConfig extends SocialConfigurerAdapter {
 
-//    private static final String appId = "wxd99431bbff8305a0";
-//
-//    private static final String appSecret = "wxd99431bbff8305a0";
-
     @Autowired
     private SecurityProperties securityProperties;
 

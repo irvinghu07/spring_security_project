@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class WeixinProperties {
-    @Value("${com.irving.security.social.weixin.providerId:/weixin}")
+    @Value("${com.irving.security.social.weixin.providerId:weixin}")
     private String providerId;
 
     /**

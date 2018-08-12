@@ -4,9 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionSignUp;
-import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class DemoConnectionSignUp implements ConnectionSignUp {
     private static final Logger logger = LoggerFactory.getLogger(DemoConnectionSignUp.class);
 
