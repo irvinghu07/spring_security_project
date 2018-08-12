@@ -38,4 +38,14 @@ public class SecurityProperties {
     public void setSocialProperties(SocialProperties socialProperties) {
         this.socialProperties = socialProperties;
     }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("SecurityProperties{");
+        sb.append("socialProperties=").append(socialProperties);
+        sb.append(", browserProperties=").append(browserProperties);
+        sb.append(", validateCodeProperties=").append(validateCodeProperties);
+        sb.append('}');
+        return sb.toString();
+    }
 }

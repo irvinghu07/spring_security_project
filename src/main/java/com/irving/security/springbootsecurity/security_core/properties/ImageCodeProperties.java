@@ -59,5 +59,17 @@ public class ImageCodeProperties {
     public void setUrls(String urls) {
         this.urls = urls;
     }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("ImageCodeProperties{");
+        sb.append("width=").append(width);
+        sb.append(", height=").append(height);
+        sb.append(", length=").append(length);
+        sb.append(", expireIn=").append(expireIn);
+        sb.append(", urls='").append(urls).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }
 

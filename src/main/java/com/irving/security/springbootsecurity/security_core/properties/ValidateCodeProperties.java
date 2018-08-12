@@ -26,4 +26,13 @@ public class ValidateCodeProperties {
     public void setMessageCodeProperties(MessageCodeProperties messageCodeProperties) {
         this.messageCodeProperties = messageCodeProperties;
     }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("ValidateCodeProperties{");
+        sb.append("imageCodeProperties=").append(imageCodeProperties);
+        sb.append(", messageCodeProperties=").append(messageCodeProperties);
+        sb.append('}');
+        return sb.toString();
+    }
 }

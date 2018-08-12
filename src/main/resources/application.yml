@@ -15,11 +15,16 @@ spring:
 com:
   irving:
     security:
-      socail:
+      social:
+        processUrl: /qqLogin
         qq:
-          providerId: qq
-          appId: wxd99431bbff8305a0
-          appSecret: 60f78681d063590a469f1b297feff3c4
+          providerId: callback.do
+          appId: 100550231
+          appSecret: 69b6ab57b22f3c2fe6a6149274e3295e
+        weixin:
+          providerId: /weixin
+          appId: 100550231
+          appSecret: 69b6ab57b22f3c2fe6a6149274e3295e
       CAPTCHA:
 #        length: 6
 #        width: 100
@@ -28,3 +33,6 @@ com:
 #        loginPage: /demo-login.html
 #        loginType: REDIRECT
         rememberMeDuration: 1800
+        signUpUrl: /demo-signup.html
+server:
+  port: 8077

@@ -1,4 +1,4 @@
-package com.irving.security.springbootsecurity.service;
+package com.irving.security.springbootsecurity.security;
 
 import org.apache.commons.codec.binary.Hex;
 import org.slf4j.Logger;

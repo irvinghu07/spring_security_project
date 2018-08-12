@@ -59,16 +59,6 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
     @Override
     public void afterPropertiesSet() throws ServletException {
         super.afterPropertiesSet();
-//        String[] urlSet = StringUtils
-//                .splitByWholeSeparatorPreserveAllTokens(StringUtils
-//                        .replace(securityProperties.getValidateCodeProperties()
-//                                .getImageCodeProperties()
-//                                .getUrls(), " ", ""), ",");
-//        for (String url : urlSet) {
-//            allUrls.add(url);
-//        }
-//        logger.info(String.format("all urls:%s", allUrls));
-
         urlMap.put(SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_FORM, ValidateCodeType.IMAGE);
         addUrlToMap(securityProperties.getValidateCodeProperties()
                 .getImageCodeProperties().getUrls(), ValidateCodeType.IMAGE);
@@ -118,12 +108,8 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
     private ValidateCodeType getValidateCodeType(HttpServletRequest request) {
         ValidateCodeType result = null;
         if (!StringUtils.equalsIgnoreCase(request.getMethod(), "get")) {
-            for (String url : urlMap.keySet()) {
-                System.out.println(String.format("{%s:%s}", url, urlMap.get(url)));
-                if (pathMatcher.match(url, request.getRequestURI())) {
-                    result = urlMap.get(url);
-                }
-            }
+            urlMap.get(urlMap.keySet().stream().filter(url -> pathMatcher.match(url, request
+                    .getRequestURI())).findFirst().orElse(null));
         }
         return result;
     }

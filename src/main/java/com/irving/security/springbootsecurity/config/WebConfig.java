@@ -50,13 +50,7 @@ public class WebConfig implements WebMvcConfigurer {
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         TimeFilter timeFilter = new TimeFilter();
         registrationBean.setFilter(timeFilter);
-//        List<String> urls =
-//                new ArrayList<String>() {{
-//                    add("/*");
-//                }};
-//        registrationBean.addUrlPatterns(urls.toString());
         registrationBean.addUrlPatterns("/*");
-
         return registrationBean;
     }
 

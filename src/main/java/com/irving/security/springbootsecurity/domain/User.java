@@ -10,17 +10,6 @@ import java.util.Date;
 
 public class User {
 
-    @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer("User{");
-        sb.append("id=").append(id);
-        sb.append(", username='").append(username).append('\'');
-        sb.append(", password='").append(password).append('\'');
-        sb.append(", birthday=").append(birthday);
-        sb.append('}');
-        return sb.toString();
-    }
-
     public interface UserSimpleView{};
 
     public interface UserDetailView extends UserSimpleView{};
@@ -81,4 +70,14 @@ public class User {
         this.birthday = birthday;
     }
 
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("User{");
+        sb.append("id=").append(id);
+        sb.append(", username='").append(username).append('\'');
+        sb.append(", password='").append(password).append('\'');
+        sb.append(", birthday=").append(birthday);
+        sb.append('}');
+        return sb.toString();
+    }
 }

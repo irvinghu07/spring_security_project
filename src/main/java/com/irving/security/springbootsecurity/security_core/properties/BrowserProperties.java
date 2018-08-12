@@ -5,6 +5,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class BrowserProperties {
+    @Value("${com.irving.security.browser.signUpUrl:/security-signup.html}")
+    private String signUpUrl;
+
     @Value("${com.irving.security.browser.loginPage:/security-login.html}")
     private String loginPage;
 
@@ -38,4 +41,24 @@ public class BrowserProperties {
     public void setRememberMeDuration(int rememberMeDuration) {
         this.rememberMeDuration = rememberMeDuration;
     }
+
+    public String getSignUpUrl() {
+        return signUpUrl;
+    }
+
+    public void setSignUpUrl(String signUpUrl) {
+        this.signUpUrl = signUpUrl;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("BrowserProperties{");
+        sb.append("signUpUrl='").append(signUpUrl).append('\'');
+        sb.append(", loginPage='").append(loginPage).append('\'');
+        sb.append(", loginType=").append(loginType);
+        sb.append(", rememberMeDuration=").append(rememberMeDuration);
+        sb.append('}');
+        return sb.toString();
+    }
+    
 }
