@@ -5,17 +5,17 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class BrowserProperties {
-    @Value("${com.irving.security.browser.signUpUrl:/security-signup.html}")
+    @Value("${com.irving.security.security_browser.signUpUrl:/security-signup.html}")
     private String signUpUrl;
 
-    @Value("${com.irving.security.browser.loginPage:/security-login.html}")
+    @Value("${com.irving.security.security_browser.loginPage:/security-login.html}")
     private String loginPage;
 
-    @Value("${com.irving.security.browser.loginType:JSON}")
+    @Value("${com.irving.security.security_browser.loginType:JSON}")
     private LoginType loginType;
 
     // default 24 hours
-    @Value("${com.irving.security.browser.rememberMeDuration:86400}")
+    @Value("${com.irving.security.security_browser.rememberMeDuration:86400}")
     private int rememberMeDuration;
 
     public LoginType getLoginType() {

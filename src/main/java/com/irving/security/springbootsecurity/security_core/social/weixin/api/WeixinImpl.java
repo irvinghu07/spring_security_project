@@ -58,6 +58,7 @@ public class WeixinImpl extends AbstractOAuth2ApiBinding implements Weixin {
         WeixinUserInfo userInfo = null;
         try {
             userInfo = objectMapper.readValue(response, WeixinUserInfo.class);
+            logger.info(userInfo.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }

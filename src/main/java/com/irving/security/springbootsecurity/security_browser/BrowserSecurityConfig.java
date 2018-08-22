@@ -1,8 +1,8 @@
-package com.irving.security.springbootsecurity.config;
+package com.irving.security.springbootsecurity.security_browser;
 
 import com.irving.security.springbootsecurity.security_core.authentication.AbstractChannelSecurityConfig;
-import com.irving.security.springbootsecurity.security_core.authentication.LoginAuthenticationFailureHandler;
-import com.irving.security.springbootsecurity.security_core.authentication.LoginAuthenticationSuccessHandler;
+import com.irving.security.springbootsecurity.security_browser.authentication.LoginAuthenticationFailureHandler;
+import com.irving.security.springbootsecurity.security_browser.authentication.LoginAuthenticationSuccessHandler;
 import com.irving.security.springbootsecurity.security_core.authentication.mobile.MessageCodeAuthenticationSecurityConfig;
 import com.irving.security.springbootsecurity.security_core.properties.SecurityConstants;
 import com.irving.security.springbootsecurity.security_core.properties.SecurityProperties;

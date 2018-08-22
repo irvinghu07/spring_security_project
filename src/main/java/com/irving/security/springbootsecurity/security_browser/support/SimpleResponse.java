@@ -1,4 +1,4 @@
-package com.irving.security.springbootsecurity.support;
+package com.irving.security.springbootsecurity.security_browser.support;
 
 public class SimpleResponse {
     private String content;

@@ -1,4 +1,4 @@
-package com.irving.security.springbootsecurity.domain;
+package com.irving.security.springbootsecurity.security_browser.support;
 
 public class SocialUserInfo {
     private String providerId;

@@ -1,4 +1,4 @@
-package com.irving.security.springbootsecurity.security_core.authentication;
+package com.irving.security.springbootsecurity.security_browser.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.irving.security.springbootsecurity.security_core.properties.LoginType;

@@ -1,9 +1,9 @@
-package com.irving.security.springbootsecurity.controller;
+package com.irving.security.springbootsecurity.security_browser;
 
-import com.irving.security.springbootsecurity.domain.SocialUserInfo;
+import com.irving.security.springbootsecurity.security_browser.support.SocialUserInfo;
 import com.irving.security.springbootsecurity.security_core.properties.SecurityConstants;
 import com.irving.security.springbootsecurity.security_core.properties.SecurityProperties;
-import com.irving.security.springbootsecurity.support.SimpleResponse;
+import com.irving.security.springbootsecurity.security_browser.support.SimpleResponse;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
